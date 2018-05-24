@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { List, ListItem } from 'react-native-elements';
+import MapView, { Marker } from 'react-native-maps';
 import * as APIKeys from './keys';
-import BeerItem from './beer_item';
 
-class BeerScreen extends React.Component {
+export default class BeerScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,24 +36,51 @@ class BeerScreen extends React.Component {
   }
 
   render() {
-    let businessData;
     if (this.state.data) {
-       businessData = this.state.data.businesses.map( business => {
-        return(
-          <BeerItem key={business.id} business={business} />
-        );
-      });
+      return (
+        <View>
+          <View style={{ alignItems: 'center', margin: 'auto' }}>
+            <Text style={{fontSize: 20, alignItems: 'center', fontFamily: 'Optima', marginBottom: 10}}>Beer Near You:</Text>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <MapView
+              style={{width: "80%", height: 200, margin: 'auto'}}
+              initialRegion={{
+                latitude: this.state.lat,
+                longitude: this.state.lng,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.02
+              }}
+              showsUserLocation
+            >
+            {this.state.data.businesses.map(business => {
+              return (
+                <Marker
+                  key={business.id}
+                  coordinate={{ latitude: business.coordinates.latitude, longitude: business.coordinates.longitude}}
+                >
+                </Marker>
+              );
+            })}
+          </MapView>
+          </View>
+          <List>
+            <FlatList
+              data={this.state.data.businesses}
+              renderItem={({ item }) => (
+                <ListItem
+                  title={item.name}
+                  subtitle={`${item.location.display_address[0]}, ${item.location.display_address[1]}`}
+                  avatar={{uri: item.image_url}}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          </List>
+        </View>
+      );
     } else {
-      businessData = null;
+      return null;
     }
-    return (
-      <View>
-        <Text>Beer near you:</Text>
-        { businessData }
-      </View>
-  );
   }
 }
-
-
-export default BeerScreen;

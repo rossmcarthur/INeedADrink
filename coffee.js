@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList  } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
+import MapView, { Marker } from 'react-native-maps';
 import * as APIKeys from './keys';
 
 class CoffeeScreen extends React.Component {
@@ -31,54 +32,58 @@ class CoffeeScreen extends React.Component {
     }).then(data => {
       this.setState({ data });
     })
-    .catch(error => console.log("Error", error));
+    .catch(error => alert("Error", error));
   }
 
   render() {
     if (this.state.data) {
-    return (
-      <View>
-      <View style={{ alignItems: 'center', margin: 'auto' }}>
-      <Text style={{fontSize: 20, alignItems: 'center', fontFamily: 'Optima'}}>Cafes Near You:</Text>
-      </View>
-      <List>
-        <FlatList
-          data={this.state.data.businesses}
-          renderItem={({ item }) => (
-            <ListItem
-              title={item.name}
-              subtitle={`${item.location.display_address[0]}, ${item.location.display_address[1]}`}
-              avatar={{uri: item.image_url}}
+      debugger
+      return (
+        <View>
+          <View style={{ alignItems: 'center', margin: 'auto' }}>
+            <Text style={{fontSize: 20, alignItems: 'center', fontFamily: 'Optima',  marginBottom: 10}}>Cafes Near You:</Text>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <MapView
+              style={{width: "80%", height: 200, margin: 'auto'}}
+              initialRegion={{
+                latitude: this.state.lat,
+                longitude: this.state.lng,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.02
+              }}
+              showsUserLocation
+            >
+            {this.state.data.businesses.map(business => {
+              return (
+                <Marker
+                  key={business.id}
+                  coordinate={{ latitude: business.coordinates.latitude, longitude: business.coordinates.longitude}}
+                >
+                </Marker>
+              );
+            })}
+          </MapView>
+          </View>
+          <List>
+            <FlatList
+              data={this.state.data.businesses}
+              renderItem={({ item }) => (
+                <ListItem
+                  title={item.name}
+                  subtitle={`${item.location.display_address[0]}, ${item.location.display_address[1]}`}
+                  avatar={{uri: item.image_url}}
+                />
+              )}
+              keyExtractor={(item) => item.id}
             />
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </List>
-      </View>
-    );
-  } else {
-    return null;
-  }
-
+          </List>
+        </View>
+      );
+    } else {
+      return null;
+    }
   }
 }
-
-// let businessData;
-// if (this.state.data) {
-//    businessData = this.state.data.businesses.map( business => {
-//     return(
-//       <CoffeeItem key={business.id} business={business} />
-//     );
-//   });
-// } else {
-//   businessData = null;
-// }
-// return (
-//   <View>
-//     <Text>Cafes near you:</Text>
-//     { businessData }
-//   </View>
-// );
-
 
 export default CoffeeScreen;
