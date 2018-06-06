@@ -10,5 +10,8 @@
     "react-native-maps": "*",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.0.1"
-  }
+  },
+  "scripts": {
+  "start": "node_modules/expo/AppEntry.js"
+}
 }
