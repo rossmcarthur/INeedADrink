@@ -2,6 +2,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "dependencies": {
+    "exp": "^54.0.1",
     "expo": "^27.0.2",
     "oauthsimple": "0.0.1",
     "react": "16.3.1",
@@ -13,6 +14,6 @@
     "ws": "^5.2.0"
   },
   "scripts": {
-    "exp start": "node_modules/expo/AppEntry.js"
+    "start": "node_modules/expo/AppEntry.js"
   }
 }
