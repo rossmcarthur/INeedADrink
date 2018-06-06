@@ -37,7 +37,6 @@ class CoffeeScreen extends React.Component {
 
   render() {
     if (this.state.data) {
-      debugger
       return (
         <View>
           <View style={{ alignItems: 'center', margin: 'auto' }}>
@@ -59,6 +58,11 @@ class CoffeeScreen extends React.Component {
                 <Marker
                   key={business.id}
                   coordinate={{ latitude: business.coordinates.latitude, longitude: business.coordinates.longitude}}
+                  onPress={() => this.props.navigation.navigate('Show', {
+                    id: business.id,
+                    userLocation: [this.state.lat, this.state.lng]
+                  })
+                    }
                 >
                 </Marker>
               );
@@ -73,6 +77,11 @@ class CoffeeScreen extends React.Component {
                   title={item.name}
                   subtitle={`${item.location.display_address[0]}, ${item.location.display_address[1]}`}
                   avatar={{uri: item.image_url}}
+                  onPress={() => this.props.navigation.navigate('Show', {
+                    id: item.id,
+                    userLocation: [this.state.lat, this.state.lng]
+                  })
+                    }
                 />
               )}
               keyExtractor={(item) => item.id}

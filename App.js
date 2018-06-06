@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import CoffeeScreen from './coffee';
 import BeerScreen from './beer';
+import ItemShow from './item_show';
 import { createStackNavigator } from 'react-navigation';
 
 class HomeScreen extends React.Component {
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
 const RootStack = createStackNavigator({
     Home: HomeScreen,
     Coffee: CoffeeScreen,
-    Beer: BeerScreen
+    Beer: BeerScreen,
+    Show: ItemShow
   },
   {
   initialRouteName: 'Home'
