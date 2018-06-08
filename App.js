@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import CoffeeScreen from './coffee';
-import BeerScreen from './beer';
+import IndexScreen from './index';
 import ItemShow from './item_show';
 import { createStackNavigator } from 'react-navigation';
 
@@ -26,19 +25,21 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <ImageBackground source={require('./assets/cafe.jpeg')} style={styles.container}>
-        <Image style={{height: 125, width: 250}} source={require('./assets/bubble.png')} />
+        <Image style={styles.title} source={require('./assets/bubble.png')} />
         <View>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Coffee', {
-                position: this.state.position
+            onPress={() => this.props.navigation.navigate('Index', {
+                position: this.state.position,
+                page: 'coffee'
               })}>
-            <Image style={{height: 115, width: 150}} source={require('./assets/coffee.png')}/>
+            <Image style={styles.coffeeButton} source={require('./assets/coffee.png')}/>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Beer', {
-                position: this.state.position
+            onPress={() => this.props.navigation.navigate('Index', {
+                position: this.state.position,
+                page: 'bar'
               })}>
-            <Image style={{height: 115, width: 150}} source={require('./assets/beer.png')}/>
+            <Image style={styles.beerButton} source={require('./assets/beer.png')}/>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -54,16 +55,23 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
-  coffeeButton: {
-    color: 'white'
+  title: {
+    height: 125,
+    width: 250
   },
-
+  coffeeButton: {
+    height: 115,
+    width: 150
+  },
+  beerButton: {
+    height: 115,
+    width: 150
+  }
 });
 
 const RootStack = createStackNavigator({
     Home: HomeScreen,
-    Coffee: CoffeeScreen,
-    Beer: BeerScreen,
+    Index: IndexScreen,
     Show: ItemShow
   },
   {

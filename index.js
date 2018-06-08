@@ -4,13 +4,14 @@ import { List, ListItem } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
 import * as APIKeys from './keys';
 
-class CoffeeScreen extends React.Component {
+class IndexScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       lat: this.props.navigation.state.params.position.coords.latitude,
       lng: this.props.navigation.state.params.position.coords.longitude,
       data: null,
+      page: this.props.navigation.state.params.page
     };
     this.fetchData = this.fetchData.bind(this);
   }
@@ -22,7 +23,7 @@ class CoffeeScreen extends React.Component {
   fetchData() {
     const lat = this.state.lat;
     const lng = this.state.lng;
-    fetch(`https://api.yelp.com/v3/businesses/search?term='coffee'&latitude=${lat}&longitude=${lng}`, {
+    fetch(`https://api.yelp.com/v3/businesses/search?term=${this.state.page}&latitude=${lat}&longitude=${lng}`, {
       headers: {
         "Authorization": 'Bearer ' + APIKeys.API,
       }
@@ -39,12 +40,12 @@ class CoffeeScreen extends React.Component {
     if (this.state.data) {
       return (
         <View>
-          <View style={{ alignItems: 'center', margin: 'auto' }}>
-            <Text style={{fontSize: 20, alignItems: 'center', fontFamily: 'Optima',  marginBottom: 10}}>Cafes Near You:</Text>
+          <View style={styles.container}>
+            <Text style={styles.header}>{this.state.page === 'coffee' ? "Cafes near you:" : "Beer near you:"}</Text>
           </View>
-          <View style={{ alignItems: 'center' }}>
+          <View style={styles.container}>
             <MapView
-              style={{width: "80%", height: 200, margin: 'auto'}}
+              style={styles.map}
               initialRegion={{
                 latitude: this.state.lat,
                 longitude: this.state.lng,
@@ -95,4 +96,24 @@ class CoffeeScreen extends React.Component {
   }
 }
 
-export default CoffeeScreen;
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    margin: 'auto'
+  },
+  header: {
+    fontSize: 20,
+    alignItems: 'center',
+    fontFamily: 'Optima',
+    marginBottom: 10
+  },
+  map: {
+    width: "80%",
+    height: 200,
+    margin: 'auto'
+  }
+
+
+});
+
+export default IndexScreen;
