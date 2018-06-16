@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
-import * as APIKeys from './keys';
+import * as APIKeys from '../keys';
 
 class IndexScreen extends React.Component {
   constructor(props) {

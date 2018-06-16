@@ -15,7 +15,7 @@ class HomeScreen extends React.Component {
   }
 async componentDidMount(){
   await Font.loadAsync({
-      'roboto': require('./assets/fonts/Roboto-Light.ttf'),
+      'roboto': require('../assets/fonts/Roboto-Light.ttf'),
     });
     this.setState({ fontLoaded: true });
     navigator.geolocation.getCurrentPosition(
@@ -31,22 +31,22 @@ async componentDidMount(){
       return (
         <View style={styles.container}>
           { this.state.fontLoaded ?
-        <ImageBackground source={require('./assets/cafe.jpeg')} style={styles.container}>
-          <Image style={styles.title} source={require('./assets/bubble.png')} />
+        <ImageBackground source={require('../assets/cafe.jpeg')} style={styles.container}>
+          <Image style={styles.title} source={require('../assets/bubble.png')} />
           <View>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Index', {
                   position: this.state.position,
                   page: 'coffee'
                 })}>
-              <Image style={styles.coffeeButton} source={require('./assets/coffee.png')}/>
+              <Image style={styles.coffeeButton} source={require('../assets/coffee.png')}/>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Index', {
                   position: this.state.position,
                   page: 'bar'
                 })}>
-              <Image style={styles.beerButton} source={require('./assets/beer.png')}/>
+              <Image style={styles.beerButton} source={require('../assets/beer.png')}/>
             </TouchableOpacity>
           </View>
         </ImageBackground>

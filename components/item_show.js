@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, ScrollView, View, Text, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import * as APIKeys from './keys';
+import * as APIKeys from '../keys';
 
 export default class ItemShow extends React.Component {
   constructor(props) {
