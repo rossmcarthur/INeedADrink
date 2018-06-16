@@ -39,7 +39,7 @@ class IndexScreen extends React.Component {
   render() {
     if (this.state.data) {
       return (
-        <View>
+        <View style={{backgroundColor: '#1DBBFF'}}>
           <View style={styles.container}>
             <Text style={styles.header}>{this.state.page === 'coffee' ? "Cafes near you:" : "Beer near you:"}</Text>
           </View>
@@ -73,6 +73,7 @@ class IndexScreen extends React.Component {
           <List>
             <FlatList
               data={this.state.data.businesses}
+              style={{ backgroundColor: '#D1F1FF'}}
               renderItem={({ item }) => (
                 <ListItem
                   title={item.name}
@@ -99,18 +100,21 @@ class IndexScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    margin: 'auto'
+    margin: 'auto',
+    backgroundColor: '#1DBBFF'
   },
   header: {
     fontSize: 20,
     alignItems: 'center',
-    fontFamily: 'Optima',
-    marginBottom: 10
+    fontFamily: "roboto",
+    color: 'white',
+    paddingBottom: 10,
+    paddingTop: 10
   },
   map: {
     width: "80%",
     height: 200,
-    margin: 'auto'
+    borderRadius: 5
   }
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as APIKeys from './keys';
 
@@ -33,17 +33,17 @@ export default class ItemShow extends React.Component {
   render() {
     if (this.state.data) {
       return (
-        <ScrollView style={{ flex: 1 }} >
-          <View style={{ flex: 1, alignItems: 'center'}}>
-            <Text style={{fontFamily: "Optima", fontSize: 30}}>{this.state.data.name}</Text>
-            <Text style={{fontFamily: 'Optima', fontSize: 20}}>{this.state.data.location.display_address[0]}, {this.state.data.location.display_address[1]}</Text>
-            <Text style={{fontFamily: 'Optima', fontSize: 20}}>{this.state.data.display_phone}</Text>
-            <Text style={{fontFamily: 'Optima', fontSize: 20}}>{this.state.data.hours[0].is_open_now ? "Open Now!" : "Closed!"}</Text>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.container}>
+            <Text style={styles.headerText}>{this.state.data.name}</Text>
+            <Text style={styles.subheaderText}>{this.state.data.location.display_address[0]}, {this.state.data.location.display_address[1]}</Text>
+            <Text style={styles.subheaderText}>{this.state.data.display_phone}</Text>
+            <Text style={styles.subheaderText}>{this.state.data.hours[0].is_open_now ? "Open Now!" : "Closed!"}</Text>
           </View>
-          <View style={{ flex: 2, alignItems: 'center', flexDirection: 'column', justifyContent: 'space-around', width: '100%', height: '100%'}}>
-            <Image style={{ width: '80%', height: 250, marginTop: 20, marginBottom: 20}} source={{uri: this.state.data.image_url}} />
+          <View style={styles.content}>
+            <Image style={styles.image} source={{uri: this.state.data.image_url}} />
             <MapView
-              style={{width: "80%", height: 250, paddingLeft: 30}}
+              style={styles.map}
               initialRegion={{
                 latitude: this.props.navigation.state.params.userLocation[0],
                 longitude: this.props.navigation.state.params.userLocation[1],
@@ -56,7 +56,6 @@ export default class ItemShow extends React.Component {
                 coordinate={{ latitude: this.state.data.coordinates.latitude, longitude: this.state.data.coordinates.longitude}}>
               </Marker>
             </MapView>
-
           </View>
         </ScrollView>
       );
@@ -64,5 +63,50 @@ export default class ItemShow extends React.Component {
       return null;
     }
   }
-
 }
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#1DBBFF'
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#1DBBFF'
+  },
+  headerText: {
+    fontFamily: "roboto",
+    fontSize: 30,
+    color: 'white',
+    textAlign: 'center'
+  },
+  subheaderText: {
+    fontFamily: 'roboto',
+    fontSize: 20,
+    color: 'white'
+  },
+  content: {
+    flex: 2,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#1DBBFF'
+  },
+  image: {
+    width: '80%',
+    height: 250,
+    marginTop: 20,
+    marginBottom: 20,
+    borderRadius: 5
+  },
+  map: {
+    width: "80%",
+    height: 250,
+    paddingLeft: 30,
+    borderRadius: 5
+  }
+
+});

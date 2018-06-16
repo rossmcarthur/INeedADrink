@@ -3,16 +3,21 @@ import { StyleSheet, Text, View, Button, ImageBackground, Image, TouchableOpacit
 import IndexScreen from './index';
 import ItemShow from './item_show';
 import { createStackNavigator } from 'react-navigation';
+import { Font } from 'expo';
 
 class HomeScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      position: 'unknown'
+      position: 'unknown',
+      fontLoaded: false
     };
   }
-
-  componentDidMount(){
+async componentDidMount(){
+  await Font.loadAsync({
+      'roboto': require('./assets/fonts/Roboto-Light.ttf'),
+    });
+    this.setState({ fontLoaded: true });
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({position});
@@ -23,27 +28,31 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    return (
-      <ImageBackground source={require('./assets/cafe.jpeg')} style={styles.container}>
-        <Image style={styles.title} source={require('./assets/bubble.png')} />
-        <View>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Index', {
-                position: this.state.position,
-                page: 'coffee'
-              })}>
-            <Image style={styles.coffeeButton} source={require('./assets/coffee.png')}/>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Index', {
-                position: this.state.position,
-                page: 'bar'
-              })}>
-            <Image style={styles.beerButton} source={require('./assets/beer.png')}/>
-          </TouchableOpacity>
+      return (
+        <View style={styles.container}>
+          { this.state.fontLoaded ?
+        <ImageBackground source={require('./assets/cafe.jpeg')} style={styles.container}>
+          <Image style={styles.title} source={require('./assets/bubble.png')} />
+          <View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Index', {
+                  position: this.state.position,
+                  page: 'coffee'
+                })}>
+              <Image style={styles.coffeeButton} source={require('./assets/coffee.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Index', {
+                  position: this.state.position,
+                  page: 'bar'
+                })}>
+              <Image style={styles.beerButton} source={require('./assets/beer.png')}/>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+        : null }
         </View>
-      </ImageBackground>
-    );
+      );
   }
 }
 
@@ -53,7 +62,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     width: '100%',
-    height: '100%'
+    height: '100%',
+  },
+  image: {
+    fontFamily: 'roboto'
   },
   title: {
     height: 125,
