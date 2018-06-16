@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "I Need A Drink",
-    "description": "I Need A Drink is the fastest way to locate the nearest bar or cafe to you. Using the Yelp API and the geolocation of the current device, users are able to find all of the bars and cafes in their area. I Need A Drink marks their locations on a Map component, and users can click on the corresponding marker or list item of a specific location to navigate to a window with more detailed information about each location. Now with I Need A Drink you can get your desired fix with just the click of a button!",
+    "name": "I Need a Drink",
+    "description": "I Need a Drink is the fastest way to locate the nearest bar or cafe to you. Using the Yelp API and the geolocation of the current device, users are able to find all of the bars and cafes in their area. I Need a Drink marks their locations on a Map component, and users can click on the corresponding marker or list item of a specific location to navigate to a window with more detailed information about each location. Now with I Need a Drink you can get your fix with just the click of a button!",
     "githubUrl": "https://github.com/rossmcarthur/INeedADrink",
     "slug": "i-need-a-drink",
     "privacy": "public",
