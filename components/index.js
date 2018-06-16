@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
 import * as APIKeys from '../keys';
@@ -39,11 +39,11 @@ class IndexScreen extends React.Component {
   render() {
     if (this.state.data) {
       return (
-        <View style={{backgroundColor: '#1DBBFF'}}>
-          <View style={styles.container}>
+        <View style={{backgroundColor: '#1DBBFF', flex: 1}}>
+          <View style={styles.title}>
             <Text style={styles.header}>{this.state.page === 'coffee' ? "Cafes near you:" : "Beer near you:"}</Text>
           </View>
-          <View style={styles.container}>
+          <View style={styles.mapContainer}>
             <MapView
               style={styles.map}
               initialRegion={{
@@ -70,25 +70,27 @@ class IndexScreen extends React.Component {
             })}
           </MapView>
           </View>
-          <List>
-            <FlatList
-              data={this.state.data.businesses}
-              style={{ backgroundColor: '#D1F1FF'}}
-              renderItem={({ item }) => (
-                <ListItem
-                  title={item.name}
-                  subtitle={`${item.location.display_address[0]}, ${item.location.display_address[1]}`}
-                  avatar={{uri: item.image_url}}
-                  onPress={() => this.props.navigation.navigate('Show', {
-                    id: item.id,
-                    userLocation: [this.state.lat, this.state.lng]
-                  })
-                    }
-                />
-              )}
-              keyExtractor={(item) => item.id}
-            />
-          </List>
+          <View style={{ flex: 3 }}>
+            <List>
+              <FlatList
+                data={this.state.data.businesses}
+                style={{ backgroundColor: '#D1F1FF'}}
+                renderItem={({ item }) => (
+                  <ListItem
+                    title={item.name}
+                    subtitle={`${item.location.display_address[0]}, ${item.location.display_address[1]}`}
+                    avatar={{uri: item.image_url}}
+                    onPress={() => this.props.navigation.navigate('Show', {
+                      id: item.id,
+                      userLocation: [this.state.lat, this.state.lng]
+                    })
+                      }
+                  />
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </List>
+            </View>
         </View>
       );
     } else {
@@ -98,10 +100,17 @@ class IndexScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  title: {
     alignItems: 'center',
     margin: 'auto',
-    backgroundColor: '#1DBBFF'
+    backgroundColor: '#1DBBFF',
+    flex: 0.3
+  },
+  mapContainer: {
+    alignItems: 'center',
+    margin: 'auto',
+    backgroundColor: '#1DBBFF',
+    flex: 1.3
   },
   header: {
     fontSize: 20,
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 200,
     borderRadius: 5
-  }
+  },
 
 
 });
